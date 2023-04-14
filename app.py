@@ -15,17 +15,24 @@ st.set_page_config(
     # layout="wide",
 )
 
-st.title("Dozing Off While Driving - Demo")
+st.title("Detecting Dozing Off")
+st.write("")
+st.write("")
+st.write("")
+
 with st.container():
     c1, c2 = st.columns(spec=[1, 1])
     with c1:
         WAIT_TIME = st.slider(
-            "Seconds to wait before sounding alarm:", 0.0, 5.0, 1.0, 0.25
+            "**Seconds to wait before sounding alarm:**", 0.0, 5.0, 1.0, 0.25
         )
+        st.write(f"Current value is **{WAIT_TIME}** seconds")
 
     with c2:
         EAR_THRESH = st.slider(
-            "Eye Aspect Ratio threshold:", 0.0, 0.4, 0.18, 0.01)
+            "**Eye Aspect Ratio threshold:**", 0.0, 0.4, 0.18, 0.01)
+        
+        st.write(f" Current value, EAR = **{EAR_THRESH}**")
 
 thresholds = {
     "EAR_THRESH": EAR_THRESH,
@@ -70,6 +77,9 @@ def audio_frame_callback(frame: av.AudioFrame):
 #     video_html_attrs=VideoHTMLAttributes(
 #         autoPlay=True, controls=False, muted=False),
 # )
+
+st.write("")
+st.write("")
 
 ctx = webrtc_streamer(
     key="drowsiness-detection",
