@@ -2,7 +2,7 @@ import av
 import numpy as np
 from pydub import AudioSegment
 
-
+AudioSegment.converter = "ffmpeg.exe"
 class AudioFrameHandler:
     def __init__(self, sound_file_path: str = ""):
         self.custom_audio = AudioSegment.from_file(file=sound_file_path, format="wav")
