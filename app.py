@@ -2,7 +2,7 @@ import os
 import streamlit as st
 import av
 import threading
-from streamlit_webrtc import VideoHTMLAttributes, webrtc_streamer
+from streamlit_webrtc import VideoHTMLAttributes, webrtc_streamer, RTCConfiguration
 from audio_handling import AudioFrameHandler
 from dozingoff_handling import VideoFrameHandler
 
@@ -58,14 +58,35 @@ def audio_frame_callback(frame: av.AudioFrame):
     return new_frame
 
 
+# ctx = webrtc_streamer(
+#     key="drowsiness-detection",
+#     video_frame_callback=video_frame_callback,
+#     audio_frame_callback=audio_frame_callback,
+#     rtc_configuration={"iceServers": [
+#         {"urls": ["stun:stun.l.google.com:19302"]}]},
+    
+#     media_stream_constraints={
+#         "video": {"height": {"ideal": 480}}, "audio": True},
+#     video_html_attrs=VideoHTMLAttributes(
+#         autoPlay=True, controls=False, muted=False),
+# )
+
 ctx = webrtc_streamer(
     key="drowsiness-detection",
     video_frame_callback=video_frame_callback,
     audio_frame_callback=audio_frame_callback,
-    rtc_configuration={"iceServers": [
-        {"urls": ["stun:stun.l.google.com:19302"]}]},
+    rtc_configuration=RTCConfiguration(
+        {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+        ),
     media_stream_constraints={
         "video": {"height": {"ideal": 480}}, "audio": True},
     video_html_attrs=VideoHTMLAttributes(
         autoPlay=True, controls=False, muted=False),
 )
+
+
+# webrtc_streamer(key="key", video_processor_factory=VideoProcessor,
+# 				rtc_configuration=RTCConfiguration(
+# 					{"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+# 					)
+# 	)
